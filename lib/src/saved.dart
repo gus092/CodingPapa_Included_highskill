@@ -1,0 +1,49 @@
+import 'package:english_words/english_words.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+
+
+class SavedList extends StatefulWidget {
+
+  SavedList({@required this.saved}); //constructor
+
+
+  final Set<WordPair> saved;
+
+  @override
+  _SavedListState createState() => _SavedListState();
+}
+
+class _SavedListState extends State<SavedList> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: Text("Saved"),),
+      body: _buildList(),
+    );
+  }
+
+  Widget _buildList() {
+    return ListView.builder(itemCount: widget.saved.length * 2,
+        itemBuilder: (context, index) { //itemcount갯수를 알려주기
+          if (index.isOdd)
+            return Divider();
+
+          var realIndex = index ~/ 2;
+
+          return _buildRow(
+              widget.saved.toList()[realIndex]); //saved는 set이므로 list로 변경후 받아옴
+        });
+  }
+
+  Widget _buildRow(WordPair pair) {
+    return ListTile(
+      title: Text(pair.asPascalCase, textScaleFactor: 1.5,),
+      onTap: () {
+        setState(() {
+          widget.saved.remove(pair); //이걸지우고 다시 화면 생성함
+        });
+      },
+    )
+  }
+}

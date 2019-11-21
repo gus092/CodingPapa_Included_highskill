@@ -1,3 +1,4 @@
+import 'package:codingpapa_including_highskill/src/saved.dart';
 import 'package:flutter/material.dart';
 import 'package:english_words/english_words.dart';
 
@@ -16,6 +17,17 @@ class _RandomListState extends State<RandomList> {
     return Scaffold(
       appBar: AppBar(
         title: Text("naming app"),
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(Icons.list),
+            onPressed: (){
+              Navigator.of (context).push( //페이지 전환 Navigator object사용
+                MaterialPageRoute(builder:  (context) => SavedList(saved : _saved)) //_saved를 받아서 SavedList의 saved에 바로 넣어줌
+                //**Data를 보내는게 아니라reference를 보내서 savedlist에서 수정해도 같이 수정됨
+              );
+            },
+          )
+        ]
       ),
       body: _buildList(),
     );
